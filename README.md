@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/coffeeturbo/job4j_design.svg?branch=master)](https://travis-ci.com/coffeeturbo/job4j_design)
+[![codecov](https://codecov.io/gh/coffeeturbo/job4j_design/branch/master/graph/badge.svg)](https://codecov.io/gh/coffeeturbo/job4j_design)
 # Второй уровень изучения java 
 ##chapter_001 - Блок 1. Структуры данных и алгоритмы.
 
