@@ -35,7 +35,9 @@ public class EvenItTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
+        it.hasNext();
         assertThat(it.next(), is(4));
+        it.hasNext();
         assertThat(it.next(), is(6));
     }
 

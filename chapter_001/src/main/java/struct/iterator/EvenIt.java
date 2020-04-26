@@ -17,6 +17,7 @@ public class EvenIt implements Iterator {
         var result = false;
         for (int i = pointer; i < array.length; i++) {
             if (isEven(array[i])) {
+                pointer = i;
                 result = true;
                 break;
             }
@@ -26,16 +27,12 @@ public class EvenIt implements Iterator {
 
     @Override
     public Object next() throws NoSuchElementException {
-        Object result;
-        do {
-            if (pointer >= array.length) {
-                throw new NoSuchElementException();
-            }
-            result = array[pointer++];
+        if (pointer >= array.length
+            || !isEven(array[pointer])) {
+            throw new NoSuchElementException();
+        }
 
-        } while (!isEven((int) result));
-
-        return result;
+        return array[pointer++];
     }
 
     private static boolean isEven(int value) {
