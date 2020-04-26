@@ -99,4 +99,20 @@ public class ConverterTest {
         assertThat(it.next(), is(3));
         it.next();
     }
+
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenHasFiveEmptyIterators() {
+        Iterator<Integer> emptyIt1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> emptyIt2 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> emptyIt3 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> emptyIt4 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> emptyIt5 = (new ArrayList<Integer>()).iterator();
+
+        Iterator<Iterator<Integer>> its = Arrays.asList(
+            emptyIt1, emptyIt2, emptyIt3, emptyIt4, emptyIt5).iterator();
+        Converter iteratorOfConverters = new Converter();
+        it = iteratorOfConverters.convert(its);
+        it.next();
+    }
 }
