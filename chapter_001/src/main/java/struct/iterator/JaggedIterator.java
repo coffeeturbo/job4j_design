@@ -1,51 +1,37 @@
 package struct.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class JaggedIterator implements Iterator {
 
-    private static int pointer;
-    private int[][] array;
-    private int arrayLength;
+    private int iPointer;
+    private int jPointer;
+    final private int[][] array;
 
     public JaggedIterator(int[][] array) {
-        pointer = 0;
+        jPointer = 0;
+        iPointer = 0;
         this.array = array;
-        this.arrayLength = countElements(array);
     }
 
     public boolean hasNext() {
-        return pointer < arrayLength;
+        return iPointer < array.length && jPointer < array[iPointer].length;
     }
 
     public Object next() {
+        if (!hasNext()) {
+            throw  new NoSuchElementException();
+        }
+        var elem = array[iPointer][jPointer];
 
-        Object element = null;
-        var localPointer = 0;
-
-        outerLoop:
-        for (int i = 0; i < array.length; i++) {
-            for (int n = 0; n < array[i].length; n++) {
-                if (localPointer == pointer) {
-                    element = array[i][n];
-                    pointer++;
-                    break outerLoop;
-                }
-
-                localPointer++;
-            }
+        if (jPointer == array[iPointer].length - 1) {
+            jPointer = 0;
+            iPointer++;
+        } else {
+            jPointer++;
         }
 
-        return element;
-    }
-
-    private static int countElements(int[][] array) {
-        int arraySize = 0;
-        for (int[] ints : array) {
-            for (int val: ints) {
-                arraySize++;
-            }
-        }
-        return arraySize;
+        return elem;
     }
 }

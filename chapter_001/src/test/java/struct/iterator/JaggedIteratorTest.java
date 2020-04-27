@@ -3,8 +3,10 @@ package struct.iterator;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
-import static org.junit.Assert.assertThat;
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class JaggedIteratorTest {
     @Test
@@ -19,6 +21,11 @@ public class JaggedIteratorTest {
         assertThat(count, is(1));
         count = iterator.next();
         assertThat(count, is(4));
+
+        count = iterator.next();
+        assertThat(count, is(3));
+
+
     }
 
     @Test
@@ -55,4 +62,14 @@ public class JaggedIteratorTest {
         MatcherAssert.assertThat(it.hasNext(), is(false));
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenSomethingWrong() {
+        int[][] inputValues = new int[][]{{1}, {3, 4}, {7}};
+
+        var it = new JaggedIterator(inputValues);
+        while (it.hasNext()) {
+            it.next();
+        }
+        it.next();
+    }
 }
