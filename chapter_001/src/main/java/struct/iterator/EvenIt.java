@@ -27,8 +27,7 @@ public class EvenIt implements Iterator {
 
     @Override
     public Object next() throws NoSuchElementException {
-        if (pointer >= array.length
-            || !isEven(array[pointer])) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
 
