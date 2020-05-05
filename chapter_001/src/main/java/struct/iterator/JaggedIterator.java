@@ -5,33 +5,42 @@ import java.util.NoSuchElementException;
 
 public class JaggedIterator implements Iterator {
 
-    private int iPointer;
-    private int jPointer;
-    final private int[][] array;
+    private int i = 0;
+    private int j = 0;
+    private int[][] data;
 
     public JaggedIterator(int[][] array) {
-        jPointer = 0;
-        iPointer = 0;
-        this.array = array;
+        this.data = array;
     }
 
     public boolean hasNext() {
-        return iPointer < array.length && jPointer < array[iPointer].length;
+        if (data.length == 0) {
+            return false;
+        }
+
+        while (data[i].length == 0 && i < data.length - 1) {
+            i++;
+        }
+
+        return data[i].length != 0 || i != data.length - 1;
     }
 
     public Object next() {
+
         if (!hasNext()) {
-            throw  new NoSuchElementException();
+            throw new NoSuchElementException();
         }
-        var elem = array[iPointer][jPointer];
 
-        if (jPointer == array[iPointer].length - 1) {
-            jPointer = 0;
-            iPointer++;
+        int row = i;
+        int col = j;
+
+        if (j < data[i].length - 1) {
+            j++;
         } else {
-            jPointer++;
+            j = 0;
+            i++;
         }
 
-        return elem;
+        return data[row][col];
     }
 }
