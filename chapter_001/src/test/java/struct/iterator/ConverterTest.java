@@ -1,10 +1,12 @@
 package struct.iterator;
 
+import org.hamcrest.core.Is;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -79,9 +81,9 @@ public class ConverterTest {
 
     @Test
     public void hasNextShouldReturnFalseInCaseOfEmptyIterators() {
-        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> it2 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> it3 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> it1 = Collections.emptyIterator();
+        Iterator<Integer> it2 = Collections.emptyIterator();
+        Iterator<Integer> it3 = Collections.emptyIterator();
         Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
         Converter iteratorOfConverters = new Converter();
         it = iteratorOfConverters.convert(its);
@@ -103,16 +105,28 @@ public class ConverterTest {
 
     @Test(expected = NoSuchElementException.class)
     public void whenHasFiveEmptyIterators() {
-        Iterator<Integer> emptyIt1 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> emptyIt2 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> emptyIt3 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> emptyIt4 = (new ArrayList<Integer>()).iterator();
-        Iterator<Integer> emptyIt5 = (new ArrayList<Integer>()).iterator();
+        Iterator<Integer> emptyIt1 = Collections.emptyIterator();
+        Iterator<Integer> emptyIt2 = Collections.emptyIterator();
+        Iterator<Integer> emptyIt3 = Collections.emptyIterator();
+        Iterator<Integer> emptyIt4 = Collections.emptyIterator();
+        Iterator<Integer> emptyIt5 = Collections.emptyIterator();
 
         Iterator<Iterator<Integer>> its = Arrays.asList(
-            emptyIt1, emptyIt2, emptyIt3, emptyIt4, emptyIt5).iterator();
+            emptyIt1, emptyIt2, emptyIt3, emptyIt4, emptyIt5
+        ).iterator();
         Converter iteratorOfConverters = new Converter();
         it = iteratorOfConverters.convert(its);
         it.next();
+    }
+
+    @Test
+    public void whenNeedSkipEmptyIterators() {
+        Iterator<Integer> it1 = Collections.emptyIterator();
+        Iterator<Integer> it2 = Collections.emptyIterator();
+        Iterator<Integer> it3 = Arrays.asList(1).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
+        Converter iteratorOfIterators = new Converter();
+        it = iteratorOfIterators.convert(its);
+        Assert.assertThat(it.next(), Is.is(1));
     }
 }
