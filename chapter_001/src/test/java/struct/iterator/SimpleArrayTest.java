@@ -37,7 +37,7 @@ public class SimpleArrayTest {
         assertThat(200, is(array.get(1)));
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void whenRemoveElement() {
         SimpleArray<Integer> array = new SimpleArray<>(10);
         array.add(1);
@@ -45,6 +45,29 @@ public class SimpleArrayTest {
         array.add(3);
         array.remove(0);
         assertThat(2, is(array.get(0)));
+        assertThat(3, is(array.get(1)));
+        assertThat(null, is(array.get(2)));
+    }
+
+    @Test
+    public void whenRemoveMidElement() {
+        SimpleArray<Integer> array = new SimpleArray<>(10);
+        array.add(1);
+        array.add(2);
+        array.add(3);
+        array.remove(1);
+        assertThat(1, is(array.get(0)));
+        assertThat(3, is(array.get(1)));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenRemoveMidElementAndGetInvalidLastIndex() {
+        SimpleArray<Integer> array = new SimpleArray<>(10);
+        array.add(1);
+        array.add(2);
+        array.add(3);
+        array.remove(1);
+        assertThat(1, is(array.get(0)));
         assertThat(3, is(array.get(1)));
         assertThat(null, is(array.get(2)));
     }

@@ -1,49 +1,58 @@
 package struct.iterator;
 
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
 
     private Object[] objects;
-    private int index = 0;
+    private int size = 0;
 
     SimpleArray(int size) {
         objects = new Object[size];
     }
 
     public void add(T model) {
-        this.objects[index++] = model;
+        this.objects[size++] = model;
     }
 
-    public void set(int id, T model) {
-        Objects.checkIndex(id, index);
+    public void set(int index, T model) {
+        Objects.checkIndex(index, size);
 
-        this.objects[id] = model;
+        this.objects[index] = model;
     }
 
-    public T get(int id) {
-        Objects.checkIndex(id, index);
+    public T get(int index) {
+        Objects.checkIndex(index, size);
 
-        return (T) this.objects[id];
+        return (T) this.objects[index];
     }
 
-    public void remove(int id) {
-        Objects.checkIndex(id, index);
-
-        // удаляем элемент из массива
-        objects[id] = null;
-        // сдвигаем
-        for (int i = id; i < objects.length - 1; i++) {
-            var tmp = objects[i];
-            objects[i] = objects[i + 1];
-            objects[i + 1] = tmp;
-        }
+    public void remove(int index) {
+        Objects.checkIndex(index, size);
+        System.arraycopy(objects, index + 1, objects, index, size - index);
+        size--;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return (Iterator<T>) Arrays.asList(objects).iterator();
+        return new Iterator<T>() {
+            private int pointer = 0;
+
+            @Override
+            public boolean hasNext() {
+                return objects.length > pointer;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
+                return (T) objects[pointer++];
+            }
+        };
     }
 }
