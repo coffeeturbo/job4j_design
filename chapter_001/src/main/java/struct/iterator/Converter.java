@@ -1,5 +1,6 @@
 package struct.iterator;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,17 +8,12 @@ public class Converter {
 
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<>() {
-            Iterator<Integer> iterator = it.next();
+            Iterator<Integer> iterator = it.hasNext() ? it.next() : Collections.emptyIterator();
 
             @Override
             public boolean hasNext() {
-                if (!iterator.hasNext()) {
-                    while (it.hasNext()) {
-                        iterator = it.next();
-                        if (iterator.hasNext()) {
-                            break;
-                        }
-                    }
+                while (!iterator.hasNext() && it.hasNext()) {
+                    iterator = it.next();
                 }
                 return iterator.hasNext();
             }
