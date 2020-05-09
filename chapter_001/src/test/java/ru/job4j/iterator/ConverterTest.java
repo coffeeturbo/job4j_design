@@ -1,4 +1,4 @@
-package struct.iterator;
+package ru.job4j.iterator;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;

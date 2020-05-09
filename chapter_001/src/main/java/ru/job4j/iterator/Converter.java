@@ -1,4 +1,4 @@
-package struct.iterator;
+package ru.job4j.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
