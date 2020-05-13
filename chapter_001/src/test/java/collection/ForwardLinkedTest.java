@@ -13,7 +13,8 @@ public class ForwardLinkedTest {
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
-        linked.deleteFirst();
+        Integer del = linked.deleteFirst();
+        assertThat(del, is(1));
         linked.iterator().next();
     }
 
@@ -28,8 +29,10 @@ public class ForwardLinkedTest {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
         linked.add(2);
-        linked.deleteFirst();
+        Integer del = linked.deleteFirst();
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
+        linked.deleteFirst();
+        assertThat(del, is(1));
     }
 }
