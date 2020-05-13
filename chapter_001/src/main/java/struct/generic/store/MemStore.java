@@ -17,9 +17,8 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean replace(String id, T model) {
-        T el = findById(id);
-        if (el != null) {
-            int listId = mem.indexOf(el);
+        int listId = indexOf(id);
+        if (listId >= 0) {
             mem.set(listId, model);
             return true;
         }
@@ -28,8 +27,16 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public void delete(String id) {
-        T object = findById(id);
-        mem.remove(object);
+        int index = indexOf(id);
+        mem.remove(index);
+    }
+
+    public int indexOf(String id) {
+        T elem = findById(id);
+        if (elem == null) {
+            return -1;
+        }
+        return mem.indexOf(elem);
     }
 
     @Override

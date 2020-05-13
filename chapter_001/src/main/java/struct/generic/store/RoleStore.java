@@ -1,41 +1,27 @@
 package struct.generic.store;
 
-import struct.generic.Base;
+import struct.generic.Role;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RoleStore<T extends Base> implements Store<T>  {
-    private final List<T> mem = new ArrayList<>();
+public class RoleStore implements Store<Role>  {
+    private final Store<Role> mem = new MemStore<>();
 
     @Override
-    public void add(T model) {
-        this.mem.add(model);
+    public void add(Role model) {
+        mem.add(model);
     }
 
     @Override
-    public boolean replace(String id, T model) {
-        T el = findById(id);
-        if (el != null) {
-            int listId = mem.indexOf(el);
-            mem.set(listId, model);
-            return true;
-        }
-        return false;
+    public boolean replace(String id, Role model) {
+        return mem.replace(id, model);
     }
 
     @Override
     public void delete(String id) {
-        T object = findById(id);
-        mem.remove(object);
+        mem.delete(id);
     }
 
     @Override
-    public T findById(String id) {
-        return mem
-            .stream()
-            .filter(t -> t.getId().equals(id))
-            .findAny()
-            .orElse(null);
+    public Role findById(String id) {
+        return mem.findById(id);
     }
 }
