@@ -28,23 +28,25 @@ public final class MemStore<T extends Base> implements Store<T> {
     @Override
     public void delete(String id) {
         int index = indexOf(id);
-        mem.remove(index);
+        if (index != -1) {
+            mem.remove(index);
+        }
     }
 
     public int indexOf(String id) {
-        T elem = findById(id);
-        if (elem == null) {
-            return -1;
+        for (T elem : mem) {
+            if (elem.getId().equals(id)) {
+                return mem.indexOf(elem);
+            }
         }
-        return mem.indexOf(elem);
+        return -1;
     }
 
     @Override
     public T findById(String id) {
-       return mem
-           .stream()
-           .filter(t -> t.getId().equals(id))
-           .findAny()
-           .orElse(null);
+        int index = indexOf(id);
+        return  index != -1
+            ? mem.get(index)
+            : null;
     }
 }
