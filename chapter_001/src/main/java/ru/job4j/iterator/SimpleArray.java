@@ -25,7 +25,6 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public T get(int index) {
         Objects.checkIndex(index, size);
-
         return (T) this.objects[index];
     }
 
