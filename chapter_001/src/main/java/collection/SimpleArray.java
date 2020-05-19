@@ -9,17 +9,20 @@ public class SimpleArray<T> implements Iterable<T> {
 
     private Object[] container = new Object[1];
     private int size = 0;
-    private int modCounder = 0;
+    private int modCounter = 0;
 
     @Override
     public Iterator<T> iterator() {
-        this.modCounder++;
+        int initModCounter = modCounter;
 
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private int pointer = 0;
 
             @Override
             public boolean hasNext() {
+                if (initModCounter < modCounter) {
+                    throw new ConcurrentModificationException();
+                }
                 return pointer < size;
             }
 
@@ -41,15 +44,12 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        if (modCounder > 0) {
-            throw new ConcurrentModificationException();
-        }
-
         if (size >= container.length - 1) {
             resizeContainer(10);
         }
 
         container[size++] = model;
+        modCounter++;
     }
 
     private void resizeContainer(int increaseSize) {
