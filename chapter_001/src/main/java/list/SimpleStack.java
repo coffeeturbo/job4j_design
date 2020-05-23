@@ -13,5 +13,7 @@ public class SimpleStack<T> {
         linked.add(value);
     }
 
-
+    public int getSize() {
+        return linked.getSize();
+    }
 }
