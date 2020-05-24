@@ -49,21 +49,21 @@ public class ForwardLinked<T> implements Iterable<T>  {
     }
 
     public void revert() {
-        int reversedSize = 0;
-        Node<T> reversedHead = null;
-
-        while (size > 0) {
-            Node<T> node = new Node<>(deleteLast(), null);
-            if (reversedHead == null) {
-                reversedHead = node;
-            } else {
-                reversedHead.next = node;
-            }
-            reversedSize++;
+        if (head == null) {
+            throw new NoSuchElementException();
         }
-
-        head = reversedHead;
-        size = reversedSize;
+        Node<T> prev = null;
+        Node<T> current = head;
+        Node<T> next;
+        while (current != null) {
+            next = current.next;
+            if (next == null) {
+                head = current;
+            }
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
     }
 
     public T deleteFirst() {
