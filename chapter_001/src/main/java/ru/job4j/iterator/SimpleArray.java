@@ -9,7 +9,7 @@ public class SimpleArray<T> implements Iterable<T> {
     private Object[] objects;
     private int size = 0;
 
-    SimpleArray(int size) {
+    public SimpleArray(int size) {
         objects = new Object[size];
     }
 
@@ -41,7 +41,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return objects.length > pointer;
+                return size > pointer;
             }
 
             @Override
