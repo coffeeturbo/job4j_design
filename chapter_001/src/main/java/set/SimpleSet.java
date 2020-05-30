@@ -7,8 +7,11 @@ import java.util.Iterator;
 
 public class SimpleSet<E> implements Iterable<E> {
 
-    private SimpleArray<E> set = new SimpleArray<>(10);
+    private SimpleArray<E> set;
 
+    SimpleSet() {
+        set = new SimpleArray<>(10);
+    }
     public void add(E model) {
         if (!hasElem(model)) {
             set.add(model);
@@ -22,7 +25,8 @@ public class SimpleSet<E> implements Iterable<E> {
 
     public boolean hasElem(E model) {
         for (E elm : set) {
-            if (elm.equals(model)) {
+            if (elm == model
+                || elm.equals(model)) {
                 return true;
             }
         }

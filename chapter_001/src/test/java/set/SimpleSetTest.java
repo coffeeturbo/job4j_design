@@ -29,4 +29,18 @@ public class SimpleSetTest {
         assertThat(it.hasNext(), is(false));
     }
 
+    @Test
+    public void whenAddNullAndReturnNull() {
+        SimpleSet<String> set = new SimpleSet<>();
+        set.add(null);
+        Iterator<String> it = set.iterator();
+        assertNull(it.next());
+    }
+
+    @Test
+    public void whenAddNullAndHasTrue() {
+        SimpleSet<String> set = new SimpleSet<>();
+        set.add(null);
+        assertTrue(set.hasElem(null));
+    }
 }
