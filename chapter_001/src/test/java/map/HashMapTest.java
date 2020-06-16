@@ -3,9 +3,11 @@ package map;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class HashMapTest {
@@ -22,12 +24,12 @@ public class HashMapTest {
         assertThat(map.get(3), Matchers.is("third"));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test()
     public void whenAddElemThenDeleteElemThenGetElemFalse() {
         HashMap<Integer, String> map = new HashMap<>(100);
         map.insert(132, "first");
         assertTrue(map.delete(132));
-        map.get(132);
+        assertNull(map.get(132));
     }
 
     @Test
@@ -70,4 +72,22 @@ public class HashMapTest {
         assertNotEquals(startCapacity, map.getCapacity());
     }
 
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenCorruptedIt() {
+        HashMap<Integer, String> map = new HashMap<>(100);
+        map.insert(1, "first");
+        Iterator<String> iterator = map.iterator();
+        map.insert(2, "second");
+        iterator.next();
+    }
+
+
+    @Test
+    public void whenReplaceSameIndex() {
+        HashMap<Integer, String> map = new HashMap<>(100);
+        map.insert(1, "first");
+        map.insert(1, "second");
+
+        assertThat(map.get(1), is("second"));
+    }
 }
