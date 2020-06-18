@@ -25,21 +25,27 @@ public class HashMap<K, V> implements Iterable<V> {
     }
 
     public boolean insert(K key, V value) {
+        boolean rsl = false;
         int index = this.index(this.hash(key), this.table.length);
         Node<K, V> elem = new Node<>(key, value);
 
         resize();
 
-        if (table[index] != null
-            && key.equals(table[index].getKey())) {
+        if (table[index] == null) {
             table[index] = elem;
-            return false;
+            size++;
+            modCounter++;
+            rsl = true;
+        } else {
+            if (key.equals(table[index].getKey())
+                && !value.equals(table[index].getValue())) {
+                table[index] = elem;
+                modCounter++;
+                rsl = true;
+            }
         }
 
-        table[index] = elem;
-        size++;
-        modCounter++;
-        return true;
+        return rsl;
     }
     
     public V get(K key) {
@@ -55,16 +61,15 @@ public class HashMap<K, V> implements Iterable<V> {
     }
 
     public boolean delete(K key) {
-        boolean rsl = true;
+        boolean rsl = false;
 
         int index = index(key);
-
-        if (table[index] == null) {
-            rsl = false;
-        } else {
+        if (table[index] != null
+            && key.equals(table[index].getKey())) {
             table[index] = null;
             size--;
             modCounter++;
+            rsl = true;
         }
         return rsl;
     }
@@ -85,6 +90,7 @@ public class HashMap<K, V> implements Iterable<V> {
 
                 for (int i = pointer; i < size; i++) {
                     if (table[i] != null) {
+                        pointer = i;
                         return true;
                     }
                 }
@@ -95,13 +101,6 @@ public class HashMap<K, V> implements Iterable<V> {
             public V next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-
-                for (int i = pointer; i < size; i++) {
-                    if (table[i] != null) {
-                        pointer = i;
-                        break;
-                    }
                 }
 
                 Node<K, V> node = table[pointer++];
