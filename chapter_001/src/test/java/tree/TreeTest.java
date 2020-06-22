@@ -3,9 +3,27 @@ package tree;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class TreeTest {
+
+    @Test
+    public void whenIsBinnariSuccess() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(3, 4);
+        assertTrue(tree.isBinary());
+    }
+
+    @Test
+    public void whenIsBinnariFail() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        assertFalse(tree.isBinary());
+    }
 
     @Test
     public void whenAddDuplicate() {
