@@ -8,12 +8,22 @@ import static org.junit.Assert.*;
 public class TreeTest {
 
     @Test
+    public void whenIsBinnariNestedSuccess() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(3, 4);
+        tree.add(3, 4);
+        assertTrue(tree.isBinary());
+    }
+    @Test
     public void whenIsBinnariSuccess() {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
         tree.add(3, 4);
-        assertTrue(tree.isBinary());
+        tree.add(3, 5);
+        tree.add(3, 6);
+        assertFalse(tree.isBinary());
     }
 
     @Test

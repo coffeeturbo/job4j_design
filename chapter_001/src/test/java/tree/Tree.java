@@ -52,6 +52,7 @@ public class Tree<E> implements SimpleTree<E> {
             if (el.children.size() > 2) {
                 return false;
             }
+            data.addAll(el.children);
         }
         return true;
     }
