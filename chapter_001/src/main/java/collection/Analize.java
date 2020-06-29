@@ -1,10 +1,13 @@
 package collection;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Analize {
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
+        Map<Integer, User> map = new HashMap<>();
 
         if (previous.size() > current.size()) {
             info.deleted = previous.size() - current.size();
@@ -12,15 +15,19 @@ public class Analize {
             info.added = current.size() - previous.size();
         }
 
-        for (User currnetUser : current) {
-            for (User prev: previous) {
-                if (currnetUser.equals(prev)
-                    && !currnetUser.name.equals(prev.name)) {
+        for (User prev : previous) {
+            map.put(prev.id, prev);
+        }
+
+        for (User curnt: current) {
+            if (map.get(curnt.id) != null) {
+                User prev = map.get(curnt.id);
+
+                if (!prev.equals(curnt)) {
                     info.changed++;
                 }
             }
         }
-
         return info;
     }
 
@@ -38,15 +45,16 @@ public class Analize {
             if (this == o) {
                 return true;
             }
-
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
 
-
             User user = (User) o;
 
-            return id == user.id;
+            if (id != user.id) {
+                return false;
+            }
+            return name.equals(user.name);
         }
 
         @Override
