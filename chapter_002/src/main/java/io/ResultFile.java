@@ -10,7 +10,7 @@ public class ResultFile {
             for (int i = 0; i <= 10; i++) {
                 for (int y = 0; y <= 10; y++) {
                     int rsl = i * y;
-                    str = str.concat(String.format("%d * %d = %d \n", i, y, rsl));
+                    str = str.concat(String.format("%d * %d = %d %n", i, y, rsl));
                 }
             }
 
