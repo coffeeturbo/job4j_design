@@ -9,15 +9,11 @@ public class Analize {
         Info info = new Info();
         Map<Integer, User> map = new HashMap<>();
 
-        if (previous.size() > current.size()) {
-            info.deleted = previous.size() - current.size();
-        } else {
+        if (previous.size() < current.size()) {
             info.added = current.size() - previous.size();
         }
 
-        for (User prev : previous) {
-            map.put(prev.id, prev);
-        }
+        previous.forEach(user ->  map.put(user.id, user));
 
         for (User curnt: current) {
             if (map.get(curnt.id) != null) {
@@ -25,7 +21,11 @@ public class Analize {
 
                 if (!prev.equals(curnt)) {
                     info.changed++;
+                } else {
+                    info.added++;
                 }
+            } else {
+                info.deleted++;
             }
         }
         return info;
