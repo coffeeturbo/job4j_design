@@ -33,8 +33,4 @@ public class Config {
     public String value(String key) {
         return this.values.get(key);
     }
-
-    public static void main(String[] args) {
-        System.out.println(new Config("./chapter_002/data/app.properties"));
-    }
 }
