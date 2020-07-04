@@ -33,7 +33,7 @@ public class LogFilter {
                 new FileOutputStream(file)
             ))) {
 
-            log.forEach(out::write);
+            log.forEach(s -> out.write(s.concat(System.lineSeparator())));
 
         } catch (Exception e) {
             e.getStackTrace();
