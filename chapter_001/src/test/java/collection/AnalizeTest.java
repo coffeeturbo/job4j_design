@@ -85,5 +85,18 @@ public class AnalizeTest {
         assertThat(result.deleted, is(1));
     }
 
+    @Test
+    public void whenAddAndDelete() {
+        Analize.User u1 = new Analize.User(1, "A");
+        Analize.User u2 = new Analize.User(2, "B");
+        Analize.User u3 = new Analize.User(3, "C");
+        List<Analize.User> previous = List.of(u1, u2, u3);
+        List<Analize.User> current = List.of(u1, u2, new Analize.User(33, "F"));
+        Analize.Info result = new Analize().diff(previous, current);
+        assertThat(result.added, is(1));
+        assertThat(result.changed, is(0));
+        assertThat(result.deleted, is(1));
+    }
+
 
 }
