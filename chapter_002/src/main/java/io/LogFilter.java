@@ -2,6 +2,7 @@ package io;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -20,7 +21,7 @@ public class LogFilter {
                 .forEach(log::add);
 
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
 
         return log;
@@ -36,7 +37,7 @@ public class LogFilter {
             log.forEach(s -> out.write(s.concat(System.lineSeparator())));
 
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
