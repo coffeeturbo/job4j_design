@@ -19,8 +19,10 @@ public class Config {
 
             read.lines().forEach(s -> {
                 String[] pairs = s.split("=");
-                if (pairs.length == 2) {
-                    values.put(pairs[0], pairs[1]);
+                if (!s.contains("#") && pairs.length == 2) {
+                    if (!pairs[0].isEmpty() && !pairs[1].isEmpty()) {
+                        values.put(pairs[0], pairs[1]);
+                    }
                 }
             });
         } catch (Exception e) {
