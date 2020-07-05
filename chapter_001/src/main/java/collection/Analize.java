@@ -12,7 +12,7 @@ public class Analize {
         current.forEach(user -> map.put(user.id, user.name));
 
         for (User prevUser : previous) {
-            String userValue = map.get(prevUser.id);
+            String userValue = map.remove(prevUser.id);
             if (userValue == null) {
                 info.deleted++;
             } else if (!userValue.equals(prevUser.name)) {
@@ -20,7 +20,7 @@ public class Analize {
             }
         }
 
-        info.added = current.size() - previous.size() + info.deleted;
+        info.added = map.size();
         return info;
     }
 
