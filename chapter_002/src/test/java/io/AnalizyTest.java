@@ -23,31 +23,22 @@ public class AnalizyTest {
     }
 
     @Test
-    public void whenWriteSuccees() {
-        try {
-            String path = folder.newFile("write.test").getAbsolutePath();
-            List<String> expected = Arrays.asList("1", "2", "3");
-            Analizy.write(path, expected);
-            List<String> actual = Analizy.readFile(path);
-            assertThat(actual, is(expected));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void whenWriteSuccees() throws IOException {
+        String path = folder.newFile("write.test").getAbsolutePath();
+        List<String> expected = Arrays.asList("1", "2", "3");
+        Analizy.write(path, expected);
+        List<String> actual = Analizy.readFile(path);
+        assertThat(actual, is(expected));
     }
 
     @Test
-    public void whenUnavailableSuccess() {
-        try {
-            String path = folder.newFile("unavailable.csv").getAbsolutePath();
-            Analizy analizy = new Analizy();
-            analizy.unavailable("./data/server.log", path);
+    public void whenUnavailableSuccess() throws IOException {
+        String path = folder.newFile("unavailable.csv").getAbsolutePath();
+        Analizy analizy = new Analizy();
+        analizy.unavailable("./data/server.log", path);
 
-            List<String> expected = Arrays.asList("10:58:01;10:59:01", "11:01:02;11:02:02");
-            List<String> actual = Analizy.readFile(path);
-            assertThat(actual, is(expected));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<String> expected = Arrays.asList("10:58:01;10:59:01", "11:01:02;11:02:02");
+        List<String> actual = Analizy.readFile(path);
+        assertThat(actual, is(expected));
     }
 }
