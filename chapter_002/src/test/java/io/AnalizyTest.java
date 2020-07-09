@@ -19,16 +19,7 @@ public class AnalizyTest {
     @Test
     public void whenReadSuccees() {
         List<String> log = Analizy.readFile("./data/server.log");
-        assertThat(log.size(), is(11));
-    }
-
-    @Test
-    public void whenWriteSuccees() throws IOException {
-        String path = folder.newFile("write.test").getAbsolutePath();
-        List<String> expected = Arrays.asList("1", "2", "3");
-        Analizy.write(path, expected);
-        List<String> actual = Analizy.readFile(path);
-        assertThat(actual, is(expected));
+        assertThat(log.size(), is(6));
     }
 
     @Test

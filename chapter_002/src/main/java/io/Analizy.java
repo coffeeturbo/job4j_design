@@ -14,43 +14,33 @@ public class Analizy {
     static private final int HTTP_ERROR = 500;
 
     public void unavailable(String source, String target) {
-        List<String> log = readFile(source);
-
-        ArrayList<String> filtered = new ArrayList<>();
-        StringBuilder start = new StringBuilder();
-        for (String line : log) {
-            if (line.isEmpty()) {
-                continue;
-            }
-
-            Log logRow = new Log(line);
-            if (start.length() == 0 && (
-                logRow.status.equals(HTTP_BAD_REQUEST))
-                || logRow.status.equals(HTTP_ERROR)
-            ) {
-                start.append(logRow.time);
-            } else if (start.length() != 0
-                && (logRow.status.equals(HTTP_OK)
-                || logRow.status.equals(HTTP_REDIRECT))) {
-                start.append(";" + logRow.time);
-                filtered.add(start.toString());
-                start = new StringBuilder();
-            }
+        try (BufferedReader out = new BufferedReader(new FileReader(source))) {
+            StringBuilder start = new StringBuilder();
+            out.lines()
+                .filter(s -> !s.isEmpty())
+                .map(s  -> bufferedLine(s, start))
+                .filter(s -> !s.isEmpty())
+                .forEach(s -> write(target, s));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-        write(target, filtered);
     }
 
-    public Log getLog(String line) {
-        Log log = null;
+    public static List<String> readFile(String file) {
+        List<String> content = new ArrayList<>();
 
-        if (!line.isEmpty()) {
-            log = new Log(line);
+        try (BufferedReader out = new BufferedReader(new FileReader(file))) {
+            out.lines()
+                .filter(s -> !s.isEmpty())
+                .forEach(content::add);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        return log;
+
+        return content;
     }
 
-    public static class Log {
+    private static class Log {
         public Integer status;
         public String time;
 
@@ -59,33 +49,35 @@ public class Analizy {
             this.status = Integer.parseInt(splitLine[0]);
             this.time = splitLine[1];
         }
-
-        public Log(Integer status, String time) {
-            this.status = status;
-            this.time = time;
-        }
-
     }
 
-    public static List<String> readFile(String file) {
-        List<String> content = new ArrayList<>();
-
-        try (BufferedReader out = new BufferedReader(new FileReader(file))) {
-            out.lines().forEach(content::add);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    private static String bufferedLine(String s, StringBuilder start) {
+        Log logRow = new Log(s);
+        String result = "";
+        if (start.length() == 0 && (
+            logRow.status.equals(HTTP_BAD_REQUEST))
+            || logRow.status.equals(HTTP_ERROR)
+        ) {
+            start.append(logRow.time);
+        } else if (start.length() != 0
+            && (logRow.status.equals(HTTP_OK)
+            || logRow.status.equals(HTTP_REDIRECT))) {
+            start.append(";" + logRow.time);
+            result = start.toString();
+            start.delete(0, start.length());
         }
 
-        return content;
+        return result;
     }
 
-    public static void write(String file, List<String> content) {
+    private static boolean write(String file, String content) {
         try (PrintWriter out = new PrintWriter(
-            new FileOutputStream(file))) {
-            content.forEach(out::println);
-
+            new FileOutputStream(file, true))) {
+            out.println(content);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
+        return true;
     }
 }
