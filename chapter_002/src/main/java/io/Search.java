@@ -16,16 +16,19 @@ public class Search {
         if (args[0] == null || args[0].isEmpty()) {
             throw new IllegalArgumentException("passed arg 0 is empty");
         }
+
         if (args[1] == null || args[1].isEmpty()) {
             throw new IllegalArgumentException("filter ext is not passed");
+        }
+
+        if (!Paths.get(args[0]).toFile().isDirectory()) {
+            throw new IllegalArgumentException(String.format("Not directory %s", Paths.get(args[0]).toFile().getAbsoluteFile()));
         }
 
         search(Paths.get(args[0]), args[1]).forEach(System.out::println);
     }
     public static List<Path> search(Path root, String ext) throws IOException {
-        if (!root.toFile().isDirectory()) {
-            throw new IllegalArgumentException(String.format("Not directory %s", root.toFile().getAbsoluteFile()));
-        }
+
 
         SearchFiles search =  new SearchFiles(path -> path.toString().endsWith(ext));
         Files.walkFileTree(root, search);
