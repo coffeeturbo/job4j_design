@@ -27,4 +27,39 @@ public class SearchTest {
         List<Path> paths = Search.search(tempFolderPath, "js");
         assertThat(paths.size(), Matchers.is(2));
     }
+
+    @Test
+    public void whenPassedAllArgsSuccess()throws IOException {
+        String[] args = new String[2];
+        args[0] = folder.getRoot().getAbsolutePath();
+        args[1] = "js";
+        Search.main(args);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void whenSecondArgNotPassed()throws IOException {
+        String[] args = new String[2];
+        args[0] = folder.getRoot().getAbsolutePath();
+        Search.main(args);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenFirstArgNotPassed()throws IOException {
+        String[] args = new String[2];
+        Search.main(args);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenAllArgNotPassed()throws IOException {
+        String[] args = new String[2];
+        args[1] = "js";
+        Search.main(args);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPassedDirNotExists()throws IOException {
+        String[] args = new String[2];
+        args[0] = "not/exist/folder";
+        args[1] = "js";
+        Search.main(args);
+    }
 }
