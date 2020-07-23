@@ -20,10 +20,15 @@ public class EchoServer {
 
                     do {
                         str = in.readLine();
-                        if (str.contains("Bye")) {
+                        if (str.contains("Exit")) {
                             execute = false;
+                        } else if (str.contains("Hello")) {
+                            System.out.println("Hello");
+                        } else if (str.contains("What")) {
+                            System.out.println("What");
+                        } else if (str.contains("Any")) {
+                            System.out.println("Any");
                         }
-                        System.out.println(str);
 
                     } while (!str.isEmpty());
 
