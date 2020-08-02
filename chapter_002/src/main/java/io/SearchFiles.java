@@ -14,7 +14,11 @@ public class SearchFiles implements FileVisitor<Path> {
     private ArrayList<Path> files = new ArrayList<>();
     private Predicate<Path> predicate;
 
-    SearchFiles(Predicate<Path> predicate) {
+    public SearchFiles() {
+
+    }
+
+    public SearchFiles(Predicate<Path> predicate) {
         this.predicate = predicate;
     }
 
@@ -30,7 +34,7 @@ public class SearchFiles implements FileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
-       if (predicate.test(file)) {
+       if (predicate == null || predicate.test(file)) {
             files.add(file);
        }
 
