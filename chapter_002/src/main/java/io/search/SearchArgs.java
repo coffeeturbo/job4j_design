@@ -2,6 +2,7 @@ package io.search;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class SearchArgs {
     private final String[] args;
@@ -83,7 +84,8 @@ public class SearchArgs {
             break;
 
             case SEARCH_TYPE_REGULAR_KEY:
-                test = path -> path.getFileName().toString().matches(getRegularExpr());
+                Pattern pattern = getRegularExprPattern();
+                test = path -> path.getFileName().toString().matches(pattern.pattern());
             break;
             default:
                 test = null;
@@ -92,11 +94,12 @@ public class SearchArgs {
         return test;
     }
 
-    private String getRegularExpr() {
-        return getFileName()
+    private Pattern getRegularExprPattern() {
+        String name = getFileName()
             .replace(".", "\\.")
             .replace("?", ".?")
             .replace("*", ".*");
+        return Pattern.compile(name);
     }
 
     private String fetchParam(String[] strings, String key) {
