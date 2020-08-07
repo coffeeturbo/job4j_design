@@ -14,7 +14,7 @@ WHERE product.name LIKE '%мороженное%';
 
 SELECT product.*
 FROM product
-WHERE product.expired_date > '2020-08-31';
+WHERE product.expired_date > date(current_date + interval '1 month');
 
 /**    Написать запрос, который выводит самый дорогой продукт.  */
 
