@@ -15,6 +15,10 @@ public class SqlTracker implements Store {
         this.init();
     }
 
+    public SqlTracker(Connection con) {
+        this.con = con;
+    }
+
     @Override
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
