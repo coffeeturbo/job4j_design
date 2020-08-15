@@ -21,3 +21,9 @@ notifications:
 #      -at@yandex.ru
     on_success: never # default: change
     on_failure: always # default: al,ways
+
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database job4j;' -U postgres
