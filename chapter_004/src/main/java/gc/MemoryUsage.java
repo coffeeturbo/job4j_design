@@ -79,6 +79,51 @@ public class MemoryUsage {
         }
     }
 
+
+    /**
+     *
+     * 1. Используя разные ключи запуска виртуальной машины установить различные виды сборщика мусора.
+     * [0.013s][info][gc] Using G1
+     * [0.052s][info][gc] Periodic GC disabled
+     * [0.153s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 1M->1M(4M) 1.549ms
+     * [0.239s][info][gc] GC(1) Pause Young (Concurrent Start) (G1 Evacuation Pause) 2M->2M(4M) 3.209ms
+     * [0.239s][info][gc] GC(3) Concurrent Cycle
+     * [0.245s][info][gc] GC(2) Pause Full (G1 Evacuation Pause) 2M->1M(4M) 5.597ms
+     * [0.245s][info][gc] GC(3) Concurrent Cycle 5.711ms
+     * [0.323s][info][gc] GC(4) Pause Full (System.gc()) 2M->1M(4M) 8.842ms
+     * ========
+     * [0.011s][info][gc] Using Serial
+     * [0.128s][info][gc] GC(0) Pause Young (Allocation Failure) 1M->0M(3M) 2.825ms
+     * [0.206s][info][gc] GC(1) Pause Young (Allocation Failure) 1M->1M(3M) 2.375ms
+     * [0.279s][info][gc] GC(2) Pause Full (System.gc()) 2M->1M(3M) 4.330ms
+     * ========
+     * [0.015s][info][gc] Using Parallel
+     * [0.067s][info][gc] GC(0) Pause Young (Allocation Failure) 0M->0M(3M) 1.292ms
+     * [0.137s][info][gc] GC(1) Pause Young (Allocation Failure) 0M->0M(3M) 1.456ms
+     * [0.186s][info][gc] GC(2) Pause Young (Allocation Failure) 1M->0M(3M) 1.266ms
+     * [0.229s][info][gc] GC(3) Pause Young (Allocation Failure) 1M->0M(3M) 1.554ms
+     * [0.266s][info][gc] GC(4) Pause Young (Allocation Failure) 1M->1M(3M) 2.143ms
+     * [0.347s][info][gc] GC(5) Pause Young (Allocation Failure) 1M->1M(3M) 1.283ms
+     * [0.363s][info][gc] GC(6) Pause Young (System.gc()) 1M->1M(3M) 1.240ms
+     * [0.371s][info][gc] GC(7) Pause Full (System.gc()) 1M->1M(3M) 7.896ms
+     * ========
+     * Concurrent Mark Sweep (CMS) support removed in 14.0
+     *
+     * 2. Оценить поведения срабатывания различных типов сборщиков мусора для программы из первого урока данной модуля
+     * G1 - часто вызывает young and old сборщики мусора
+     * время работы 8.842ms
+     * Serial - гораздое реже запускает сборщики мусора
+     * время работы 4.330ms
+     * Parallel - чаще всех вызывает чистку young обьектов ну и в самом конце одну полную чистку
+     * время работы 7.896ms
+     *
+     *
+     * 3. Как вы считаете какой из сборщиков мусора подойдет наиболее оптимально для приложения заявок из второго модуля?
+     *      Parallel
+     * 4. Какой тип сборщика будет оптимален для сервеного приложения?
+     *  Concurrent Mark Sweep (CMS) или Garbage-First (G1)
+     *
+     */
     public static void main(String[] args) {
         info();
         for (int i = 0; i < 100; i++) {
