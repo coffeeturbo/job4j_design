@@ -16,15 +16,23 @@ public class TemplateTest {
         String template = "${hi}, My name is ${name}";
 
         Generator generator = new Template();
-
         Map<String, String> ags = Map.ofEntries(
             new AbstractMap.SimpleEntry<String, String>("${hi}", "Привет"),
             new AbstractMap.SimpleEntry<String, String>("${name}", "Ivan")
         );
-
         String actual = generator.produce(template, ags);
-
         assertThat(actual, Matchers.is("Привет, My name is Ivan"));
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void whenHasUnusedKeyInMap() {
+        String template = "${hi}, My name is ${name}";
+
+        Generator generator = new Template();
+        Map<String, String> ags = Map.ofEntries(
+            new AbstractMap.SimpleEntry<String, String>("${hi}", "Привет"),
+            new AbstractMap.SimpleEntry<String, String>("${unused}", "Привет")
+        );
+        String actual = generator.produce(template, ags);
     }
 }
