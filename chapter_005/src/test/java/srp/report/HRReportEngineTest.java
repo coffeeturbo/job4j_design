@@ -2,6 +2,7 @@ package srp.report;
 
 import org.junit.Test;
 import srp.Employee;
+import srp.report.formatter.DefaultSalatyFormatter;
 import srp.store.MemStorage;
 
 import java.util.Calendar;
@@ -18,7 +19,7 @@ public class HRReportEngineTest {
         Employee worker = new Employee("Dean", now, now, 200);
         store.add(worker);
         store.add(worker2);
-        Report engine = new HRReportEngine(store);
+        Report engine = new HRReportEngine(store, new DefaultSalatyFormatter());
         StringBuilder expect = new StringBuilder()
             .append("Name; Salary;")
             .append(System.lineSeparator())

@@ -2,6 +2,7 @@ package srp.report;
 
 import org.junit.Test;
 import srp.Employee;
+import srp.report.formatter.DefaultSalatyFormatter;
 import srp.store.MemStorage;
 
 import java.util.Calendar;
@@ -16,7 +17,7 @@ public class ProgrammerReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ProgrammerReportEngine(store);
+        Report engine = new ProgrammerReportEngine(store, new DefaultSalatyFormatter());
         StringBuilder expect = new StringBuilder()
             .append("<!doctype html><head>  <meta charset=\"utf-8\">  <title>Job4j</title>  </head><body><table><thead>  <tr>    <th>Name</th>    <th>Hired</th>    <th>Fired</th>    <th>Salary</th>  </tr></thead><tbody>"
                 + "<tr>"

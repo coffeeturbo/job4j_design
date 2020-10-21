@@ -1,15 +1,18 @@
 package srp.report;
 
 import srp.Employee;
+import srp.report.formatter.SalaryFormatter;
 import srp.store.Store;
 
 import java.util.function.Predicate;
 
 public class ProgrammerReportEngine implements Report {
     private Store store;
+    private SalaryFormatter salaryFormatter;
 
-    public ProgrammerReportEngine(Store store) {
+    public ProgrammerReportEngine(Store store, SalaryFormatter salaryFormatter) {
         this.store = store;
+        this.salaryFormatter = salaryFormatter;
     }
 
     public String generate(Predicate<Employee> filter) {

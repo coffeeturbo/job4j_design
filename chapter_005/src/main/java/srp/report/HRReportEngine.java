@@ -1,6 +1,7 @@
 package srp.report;
 
 import srp.Employee;
+import srp.report.formatter.SalaryFormatter;
 import srp.store.Store;
 
 import java.util.Comparator;
@@ -10,9 +11,11 @@ import java.util.function.Predicate;
 public class HRReportEngine implements Report {
 
     private Store store;
+    private SalaryFormatter salaryFormatter;
 
-    public HRReportEngine(Store store) {
+    public HRReportEngine(Store store, SalaryFormatter salaryFormatter) {
         this.store = store;
+        this.salaryFormatter = salaryFormatter;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class HRReportEngine implements Report {
 
         for (Employee employee : employees) {
             text.append(employee.getName()).append(";")
-                .append(employee.getSalary()).append(";")
+                .append(salaryFormatter.getFormated(employee.getSalary())).append(";")
                 .append(System.lineSeparator());
         }
         return text.toString();

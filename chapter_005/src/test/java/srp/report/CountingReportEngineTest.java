@@ -2,6 +2,7 @@ package srp.report;
 
 import org.junit.Test;
 import srp.Employee;
+import srp.report.formatter.CountingSalatyFormatter;
 import srp.store.MemStorage;
 
 import java.util.Calendar;
@@ -16,7 +17,7 @@ public class CountingReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new CountingReportEngine(store);
+        Report engine = new CountingReportEngine(store, new CountingSalatyFormatter());
         StringBuilder expect = new StringBuilder()
             .append("Name; Hired; Fired; Salary;")
             .append(System.lineSeparator())
