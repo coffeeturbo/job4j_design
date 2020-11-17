@@ -20,7 +20,7 @@ public class TruckParkingStrategy implements Strategy {
                 throw new FullParkingException("Парковка для грузовиков полна");
             }
 
-            parking.getAutos().add(auto);
+            parking.getTrucks().add(auto);
             parking.increaseTrucks();
             return true;
         }

@@ -21,7 +21,7 @@ public class FullTruckParckingStrategy implements Strategy {
             if (totalCars >= parking.getMaxCarCapacity()) {
                 throw new FullParkingException("все парковки полны");
             }
-            parking.getAutos().add(auto);
+            parking.getTrucks().add(auto);
             parking.increaseCars(auto.getSize());
             return true;
         }

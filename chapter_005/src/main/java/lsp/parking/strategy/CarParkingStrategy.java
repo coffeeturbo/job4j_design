@@ -20,7 +20,7 @@ public class CarParkingStrategy implements Strategy {
                 throw new FullParkingException("Парковка для машин полна");
             }
 
-            parking.getAutos().add(auto);
+            parking.getCars().add(auto);
             parking.increaseCars();
             return true;
         }

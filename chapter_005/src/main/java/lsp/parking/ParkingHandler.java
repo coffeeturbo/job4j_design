@@ -7,8 +7,8 @@ import lsp.parking.parkings.CarTruckParking;
 public class ParkingHandler {
     public static void main(String[] args) {
         Parking parking = new CarTruckParking(10, 10);
-        Auto car = new Car();
-        Auto truck = new Truck();
+        Auto car = new Car(1);
+        Auto truck = new Truck(2);
 
         try {
             parking.addAuto(car);
@@ -17,10 +17,7 @@ public class ParkingHandler {
             e.printStackTrace();
         }
 
-
         System.out.println(parking.getCurrentCarCapacity());
         System.out.println(parking.getCurrentTruckCapacity());
-
-
     }
 }

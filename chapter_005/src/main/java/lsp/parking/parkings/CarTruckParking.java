@@ -14,6 +14,8 @@ import java.util.List;
 public class CarTruckParking implements Parking {
 
     List<Auto> autos;
+    List<Auto> cars;
+    List<Auto> trucks;
 
     private final int carCapacity;
     private final int truckCapacity;
@@ -25,7 +27,8 @@ public class CarTruckParking implements Parking {
     public CarTruckParking(int carCapacity, int truckCapacity) {
         this.carCapacity = carCapacity;
         this.truckCapacity = truckCapacity;
-        this.autos = new ArrayList<>(carCapacity + truckCapacity);
+        this.cars = new ArrayList<>(carCapacity);
+        this.trucks = new ArrayList<>(truckCapacity);
 
         parkingStrategies = Arrays.asList(
             new CarParkingStrategy(this),
@@ -46,8 +49,12 @@ public class CarTruckParking implements Parking {
     }
 
     @Override
-    public List<Auto> getAutos() {
-        return this.autos;
+    public List<Auto> getCars() {
+        return this.cars;
+    }
+
+    public List<Auto> getTrucks() {
+        return this.trucks;
     }
 
     @Override

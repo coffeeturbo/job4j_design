@@ -21,7 +21,7 @@ public class ParkingHandlerTest {
     @Test
     public void whenAddCarSuccess() throws Exception {
         Parking parking = new CarTruckParking(10, 10);
-        Auto car = new Car();
+        Auto car = new Car(1);
         parking.addAuto(car);
         int expectedSize = 1;
 
@@ -33,7 +33,7 @@ public class ParkingHandlerTest {
     @Test(expected = FullParkingException.class)
     public void whenAddCarFalse() throws Exception {
         Parking parking = new CarTruckParking(2, 10);
-        Auto car = new Car();
+        Auto car = new Car(1);
         parking.addAuto(car);
         parking.addAuto(car);
         parking.addAuto(car);
@@ -42,7 +42,7 @@ public class ParkingHandlerTest {
     @Test
     public void whenAddTruckSuccess() throws Exception {
         Parking parking = new CarTruckParking(10, 10);
-        Auto car = new Truck();
+        Auto car = new Truck(2);
         parking.addAuto(car);
         int expectedSize = 1;
 
@@ -52,7 +52,7 @@ public class ParkingHandlerTest {
     @Test(expected = FullParkingException.class)
     public void whenAddTruckFalse() throws Exception {
         Parking parking = new CarTruckParking(1, 1);
-        Auto car = new Truck();
+        Auto car = new Truck(2);
         parking.addAuto(car);
         parking.addAuto(car);
         parking.addAuto(car);
@@ -61,7 +61,7 @@ public class ParkingHandlerTest {
     @Test
     public void whenTruckParkingFullButCarSuccess() throws Exception {
         Parking parking = new CarTruckParking(11, 1);
-        Auto car = new Truck();
+        Auto car = new Truck(2);
         parking.addAuto(car);
 
         int expectedSize = 2;
@@ -71,7 +71,7 @@ public class ParkingHandlerTest {
     @Test(expected = FullParkingException.class)
     public void whenWhenAllParkingFull() throws Exception {
         Parking parking = new CarTruckParking(1, 1);
-        Auto car = new Truck();
+        Auto car = new Truck(2);
         parking.addAuto(car);
     }
 }

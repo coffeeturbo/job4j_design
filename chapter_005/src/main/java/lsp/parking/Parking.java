@@ -5,7 +5,8 @@ import java.util.List;
 public interface Parking {
     boolean addAuto(Auto auto) throws Exception;
 
-    List<Auto> getAutos();
+    List<Auto> getCars();
+    List<Auto> getTrucks();
     int getMaxCarCapacity();
     int getCurrentCarCapacity();
     int getMaxTruckCapacity();
