@@ -2,11 +2,13 @@ package lsp.repository;
 
 import lsp.Food;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Shop implements Repository {
 
-    private final HashMap<String, Food> repository = new HashMap<>();
+    private HashMap<String, Food> repository = new HashMap<>();
 
     @Override
     public void add(Food food) {
@@ -16,5 +18,15 @@ public class Shop implements Repository {
     @Override
     public Food getByName(String name) {
         return repository.get(name);
+    }
+
+    @Override
+    public List<Food> getAll() {
+        return new ArrayList<>(repository.values());
+    }
+
+    @Override
+    public void clear() {
+        repository = new HashMap<>();
     }
 }

@@ -53,6 +53,27 @@ public class ControllQualityTest {
         Assert.assertEquals(0, actual.getDiscount());
     }
 
+    @Test
+    public void whenRsortSuccess() {
+
+        ControllQuality controll = new ControllQuality();
+        Date expiresAt = addDays(new Date(), 7000);
+        Food badApple = new Apple("SHOP", new Date(), expiresAt, 100, 0);
+        controll.add(badApple);
+        Date expiresAt2 = addDays(new Date(), 117000);
+        Food badApple2 = new Apple("Warehouse", new Date(), expiresAt2, 100, 0);
+        controll.add(badApple2);
+
+        controll.resort();
+        Food actual = controll.getWarehouse().getByName("Warehouse");
+        Assert.assertEquals("Warehouse", actual.getName());
+        Assert.assertEquals(0, actual.getDiscount());
+
+        Food actual2 = controll.getShop().getByName("SHOP");
+        Assert.assertEquals("SHOP", actual2.getName());
+        Assert.assertEquals(0, actual.getDiscount());
+    }
+
     private static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
