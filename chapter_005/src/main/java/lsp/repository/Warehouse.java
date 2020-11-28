@@ -1,11 +1,9 @@
 package lsp.repository;
 
+import lsp.ControllQuality;
 import lsp.Food;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Warehouse implements Repository {
     private Map<String, Food> repository = new HashMap<>();
@@ -28,5 +26,12 @@ public class Warehouse implements Repository {
     @Override
     public void clear() {
         repository = new HashMap<>();
+    }
+
+    @Override
+    public boolean accept(Food food) {
+        long expired = ControllQuality.calculateProcent(food.getExpiresAt(), new Date());
+
+        return expired < 25;
     }
 }

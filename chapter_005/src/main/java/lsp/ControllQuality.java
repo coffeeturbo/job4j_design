@@ -5,7 +5,6 @@ import lsp.repository.Repository;
 import lsp.repository.Shop;
 import lsp.repository.Trash;
 import lsp.repository.Warehouse;
-import lsp.strategy.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,22 +29,22 @@ public class ControllQuality {
         return trash;
     }
 
-    private List<StorageStrategy> storages;
+    private List<Repository> storages;
 
     ControllQuality() {
 
         this.storages = Arrays.asList(
-            new TrashStrategy(trash),
-            new DiscountShopStrategy(shop),
-            new ShopStrategy(shop),
-            new WarehouseStrategy(warehouse)
+            trash,
+            shop,
+            warehouse
         );
     }
 
 
     public void add(Food food) {
-        for (StorageStrategy storage : this.storages) {
-            if (storage.store(food)) {
+        for (Repository storage : this.storages) {
+            if (storage.accept(food)) {
+                storage.add(food);
                 break;
             }
         }
@@ -62,17 +61,17 @@ public class ControllQuality {
     private List<Food> getAllFood() {
         List<Food> foods = new ArrayList<>();
 
-        foods.addAll(this.shop.getAll());
-        foods.addAll(this.warehouse.getAll());
-        foods.addAll(this.trash.getAll());
+        for (Repository repository: this.storages) {
+            foods.addAll(repository.getAll());
+        }
 
         return foods;
     }
 
     private void resetStorages() {
-        shop.clear();
-        warehouse.clear();
-        trash.clear();
+        for (Repository storage: this.storages) {
+            storage.clear();
+        }
     }
 
     public static long calculateProcent(Date expires, Date now) {
