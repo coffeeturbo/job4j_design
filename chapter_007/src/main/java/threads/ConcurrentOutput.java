@@ -1,3 +1,5 @@
+package threads;
+
 public class ConcurrentOutput {
     public static void main(String[] args) {
         Thread another = new Thread(
