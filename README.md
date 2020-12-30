@@ -10,3 +10,5 @@
 ##chapter_004 - Блок 4. JVM и JMM.
 
 ##chapter_005 - Блок 5. TDD.
+
+##chapter_007 - Multithreading.
