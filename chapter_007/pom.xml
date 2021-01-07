@@ -24,6 +24,12 @@
             <version>1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>ru.job4j_design</groupId>
+            <artifactId>chapter_001</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
