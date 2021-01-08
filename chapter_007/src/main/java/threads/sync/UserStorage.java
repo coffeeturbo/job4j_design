@@ -44,20 +44,11 @@ public class UserStorage {
         return false;
     }
 
-    public synchronized void transfer(int fromId, int toId, int amount) throws Exception {
+    public synchronized void transfer(int fromId, int toId, int amount) {
         User from = users.get(fromId);
-
-        if (from == null) {
-            throw new Exception("Source user not exists");
-        }
-
-        if (from.getAmount() < amount) {
-            throw new Exception("source user has not enought amount");
-        }
-
         User target = users.get(toId);
-        if (target == null) {
-            throw new Exception("target user not exists");
+        if (from == null || from.getAmount() < amount || target == null) {
+            return;
         }
 
         from.setAmount(from.getAmount() - amount);
