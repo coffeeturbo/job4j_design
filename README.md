@@ -12,3 +12,5 @@
 ##chapter_005 - Блок 5. TDD.
 
 ##chapter_007 - Multithreading.
+
+##chapter_008 - Hibernate.
