@@ -21,6 +21,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="config.Car" />
+        <mapping class="hbm.Brand" />
+        <mapping class="hbm.Model" />
         <mapping class="json.JsonItem" />
     </session-factory>
 </hibernate-configuration>
