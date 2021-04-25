@@ -24,5 +24,7 @@
         <mapping class="hbm.Brand" />
         <mapping class="hbm.Model" />
         <mapping class="json.JsonItem" />
+        <mapping class="hbm.many.Book" />
+        <mapping class="hbm.many.Author" />
     </session-factory>
 </hibernate-configuration>
