@@ -26,5 +26,7 @@
         <mapping class="json.JsonItem" />
         <mapping class="hbm.many.Book" />
         <mapping class="hbm.many.Author" />
+        <mapping class="hbm.lazy.LazyBrand" />
+        <mapping class="hbm.lazy.LazyCar" />
     </session-factory>
 </hibernate-configuration>

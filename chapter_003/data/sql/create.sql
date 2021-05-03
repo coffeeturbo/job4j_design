@@ -14,7 +14,7 @@ create table "user"
 );
 
 
-create table category
+create table lazyBrand
 (
     id   serial primary key,
     name VARCHAR(2000)
@@ -29,7 +29,7 @@ create table item
     id          serial primary key,
     name        VARCHAR(2000),
     user_id     int references "user" (id),
-    category_id int references category (id),
+    category_id int references lazyBrand (id),
     state_id    int references state (id)
 );
 
@@ -113,11 +113,11 @@ INSERT INTO "user" (name, role_id)
 VALUES ('Kenny', (SELECT id FROM role WHERE name = 'guest'));
 
 
-INSERT INTO category (name)
+INSERT INTO lazyBrand (name)
 VALUES ('news');
-INSERT INTO category (name)
+INSERT INTO lazyBrand (name)
 VALUES ('articles');
-INSERT INTO category (name)
+INSERT INTO lazyBrand (name)
 VALUES ('blog');
 
 INSERT INTO state (name)
@@ -131,31 +131,31 @@ VALUES ('bunned');
 
 INSERT INTO item (name, user_id, category_id, state_id)
 VALUES ('piggy lover', (SELECT id FROM "user" WHERE name = 'Eric'),
-(SELECT id FROM category WHERE name = 'news'),
+(SELECT id FROM lazyBrand WHERE name = 'news'),
 (SELECT id FROM state WHERE name = 'active'));
 
 INSERT INTO item (name, user_id, category_id, state_id)
 VALUES ('how to increase power of musculs',
 (SELECT id FROM "user" WHERE name = 'Stan'),
-(SELECT id FROM category WHERE name = 'blog'),
+(SELECT id FROM lazyBrand WHERE name = 'blog'),
 (SELECT id FROM state WHERE name = 'active'));
 
 INSERT INTO item (name, user_id, category_id, state_id)
 VALUES ('how to increase size of musculs',
 (SELECT id FROM "user" WHERE name = 'Stan'),
-(SELECT id FROM category WHERE name = 'blog'),
+(SELECT id FROM lazyBrand WHERE name = 'blog'),
 (SELECT id FROM state WHERE name = 'active'));
 
 INSERT INTO item (name, user_id, category_id, state_id)
 VALUES ('how to increase size of musculs',
 (SELECT id FROM "user" WHERE name = 'Stan'),
-(SELECT id FROM category WHERE name = 'blog'),
+(SELECT id FROM lazyBrand WHERE name = 'blog'),
 (SELECT id FROM state WHERE name = 'moderating'));
 
 INSERT INTO item (name, user_id, category_id, state_id)
 VALUES ('how to increase size of penis',
 (SELECT id FROM "user" WHERE name = 'Kenny'),
-(SELECT id FROM category WHERE name = 'blog'),
+(SELECT id FROM lazyBrand WHERE name = 'blog'),
 (SELECT id FROM state WHERE name = 'bunned'));
 
 INSERT INTO comment (name, item_id)
