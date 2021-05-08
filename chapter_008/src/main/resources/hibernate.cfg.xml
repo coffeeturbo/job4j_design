@@ -28,5 +28,7 @@
         <mapping class="hbm.many.Author" />
         <mapping class="hbm.lazy.LazyBrand" />
         <mapping class="hbm.lazy.LazyCar" />
+
+        <mapping class="hql.Candidate" />
     </session-factory>
 </hibernate-configuration>
