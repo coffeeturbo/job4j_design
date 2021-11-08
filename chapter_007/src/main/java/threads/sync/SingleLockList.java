@@ -9,16 +9,20 @@ import java.util.Iterator;
 @ThreadSafe
 public class SingleLockList<T> implements Iterable<T> {
 
-    @GuardedBy("this")
+    @GuardedBy("list")
     private final DynamicList<T> list = new DynamicList<>();
 
-    public synchronized void add(T elem) {
-        list.add(elem);
+    public void add(T elem) {
+        synchronized (list) {
+            list.add(elem);
+        }
     }
 
     @Override
-    public synchronized Iterator<T> iterator() {
-        return copy(this.list).iterator();
+    public  Iterator<T> iterator() {
+        synchronized (list) {
+            return copy(list).iterator();
+        }
     }
 
     private synchronized DynamicList<T> copy(DynamicList<T> iterator) {

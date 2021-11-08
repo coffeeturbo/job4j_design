@@ -11,7 +11,13 @@ public class SimpleBlockingQueueTest {
     public void whenSuccessPollFirst() throws InterruptedException {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(2);
 
-        Thread consumer = new Thread(queue::poll);
+        Thread consumer = new Thread(() -> {
+            try {
+                queue.poll();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         Thread producer = new Thread(() -> queue.offer(1));
 
         consumer.start();
@@ -25,7 +31,13 @@ public class SimpleBlockingQueueTest {
     public void whenSuccessOfferFirst() throws InterruptedException {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(2);
 
-        Thread consumer = new Thread(queue::poll);
+        Thread consumer = new Thread(() -> {
+            try {
+                queue.poll();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         Thread producer = new Thread(() -> queue.offer(1));
 
         producer.start();

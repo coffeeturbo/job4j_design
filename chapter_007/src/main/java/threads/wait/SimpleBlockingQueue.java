@@ -33,13 +33,13 @@ public class SimpleBlockingQueue<T> {
         }
     }
 
-    public T poll() {
+    public T poll() throws InterruptedException {
         synchronized (this) {
             if (queue.size() == 0) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new InterruptedException();
                 }
             }
 

@@ -7,7 +7,7 @@ public class ThreadStop {
                 while (!Thread.currentThread().isInterrupted()) {
                     try {
                         System.out.println("start ...");
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
